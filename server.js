@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const lyricsFinder = require('lyrics-finder')
 const SpotifyWebApi = require('spotify-web-api-node');
 const path = require('path')
+const baseUrl = "https://music-player-using-spotifyapi.herokuapp.com"
 
 
 const app = express();
@@ -37,7 +38,7 @@ app.post('/refresh', (req, res) => {
                     expiresIn: data.body.expiresIn,
                 })
                 // console.log(data.body)
-                // spotifyApi.setAccessToken(data.body['access_token'])
+                spotifyApi.setAccessToken(data.body['access_token'])
             }).catch(() => {
                 res.sendStatus(400)
             }))
@@ -47,7 +48,7 @@ app.post('/refresh', (req, res) => {
 // npm run devStart
 
 
-app.post('/login', (req, res) => {
+app.post(`${baseUrl}/login`, (req, res) => {
     const code = req.body.code
     const spotifyApi = new SpotifyWebApi({
         redirectUri: process.env.REDIRECT_URI,
@@ -67,7 +68,7 @@ app.post('/login', (req, res) => {
     })
 })
 
-app.get('/lyrics', async (req, res) => {
+app.get(`${baseUrl}/lyrics`, async (req, res) => {
     const lyrics = await lyricsFinder(req.query.artist, req.query.track) || "Oops! No lyrics Found"
     res.json({ lyrics })
 })
