@@ -20,7 +20,7 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
 });
 
-app.post('/refresh', (req, res) => {
+app.post(`${baseUrl}/refresh`, (req, res) => {
     const refreshToken = req.body.refreshToken
     const spotifyApi = new SpotifyWebApi({
         redirectUri: process.env.REDIRECT_URI,
