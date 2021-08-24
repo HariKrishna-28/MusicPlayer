@@ -5,9 +5,11 @@ export default function useAuth(code) {
     const [accessToken, setAccessToken] = useState()
     const [refreshToken, setRefreshToken] = useState()
     const [expiresIn, setExpiresIn] = useState()
+    const baseUrl = "https://music-player-using-spotifyapi.herokuapp.com"
+
 
     useEffect(() => {
-        axios.post('http://localhost:3001/login', {
+        axios.post(`${baseUrl}/login}`, {
             code
         })
             .then(res => {
@@ -24,7 +26,7 @@ export default function useAuth(code) {
         if (!refreshToken || !expiresIn) return
         const interval = setInterval(() => {
 
-            axios.post('http://localhost:3001/refresh', {
+            axios.post(`${baseUrl}/refresh`, {
                 refreshToken
             })
                 .then(res => {
