@@ -5,9 +5,9 @@ import SpotifyWebApi from 'spotify-web-api-node'
 import TrackSearchResult from './TrackSearchResult'
 import Player from './Player'
 import axios from 'axios'
-
-
 const baseUrl = "https://music-player-using-spotifyapi.herokuapp.com"
+
+
 
 const spotifyApi = new SpotifyWebApi({
     clientId: "a55eecdff1ff4bf28749ee4977f2d2a3"
@@ -42,8 +42,6 @@ const Dashboard = ({ code }) => {
 
 
     }, [playingTrack])
-
-    console.log(baseUrl)
 
     useEffect(() => {
         if (!accessToken) return

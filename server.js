@@ -4,8 +4,8 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const lyricsFinder = require('lyrics-finder')
 const SpotifyWebApi = require('spotify-web-api-node');
-const path = require('path')
 const baseUrl = "https://music-player-using-spotifyapi.herokuapp.com"
+
 
 
 const app = express();
@@ -13,14 +13,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-//  heroku config
-app.use(express.static(path.join(__dirname, "/client/build")));
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
-});
-
-app.post(`${baseUrl}/refresh`, (req, res) => {
+app.post('/refresh', (req, res) => {
     const refreshToken = req.body.refreshToken
     const spotifyApi = new SpotifyWebApi({
         redirectUri: process.env.REDIRECT_URI,
@@ -38,7 +31,7 @@ app.post(`${baseUrl}/refresh`, (req, res) => {
                     expiresIn: data.body.expiresIn,
                 })
                 // console.log(data.body)
-                spotifyApi.setAccessToken(data.body['access_token'])
+                // spotifyApi.setAccessToken(data.body['access_token'])
             }).catch(() => {
                 res.sendStatus(400)
             }))
@@ -73,4 +66,4 @@ app.get(`${baseUrl}/lyrics`, async (req, res) => {
     res.json({ lyrics })
 })
 
-app.listen(process.env.PORT || 3001)
+app.listen(3001)
