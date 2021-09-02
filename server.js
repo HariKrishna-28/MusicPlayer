@@ -21,6 +21,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 //     res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
 // });
 
+app.get("/", (req, res) => {
+    res.send("servers up and running")
+})
+
 app.post('/refresh', (req, res) => {
     const refreshToken = req.body.refreshToken
     const spotifyApi = new SpotifyWebApi({
